@@ -1,7 +1,7 @@
 //api is taken from newsdata.io
 
 // fetch data here 
-let fetch_news = async () => {
+let fetch_news = () => {
   let url = `https://newsdata.io/api/1/news?apikey=pub_14946d19ecfc01c45a43c13754ed6c864932b&q=bjp`;
 
   fetch(url).then((res) => {
@@ -110,16 +110,24 @@ let fetch_api_on_form_submit = () => {
 }
 
 
-//fetch reall data on search here
-let fetch_on_search = async (url) => {
-  let response = await fetch(url);
-  let data = await response.json();
-  let array_data = data.results;
 
-  console.log(array_data);
 
-  //show data on screen
-  default_data_on_load(array_data);
+
+//fetch real data on search here
+let fetch_on_search = (url) => {
+
+  fetch(url).then((res) => {
+    return res.json();
+  }).then((data) => {
+    let data_array = data.results;
+    console.log(data_array);
+
+    //show the data on screen
+    default_data_on_load(data_array);
+  }).catch(err => {
+    console.log('error aaya tha news nahi mili');
+  })
+  
 }
 
 
