@@ -1,17 +1,21 @@
 //api is taken from newsdata.io
 
-
 // fetch data here 
 let fetch_news = async () => {
   let url = `https://newsdata.io/api/1/news?apikey=pub_14946d19ecfc01c45a43c13754ed6c864932b&q=bjp`;
-  let response = await fetch(url);
-  let data = await response.json();
 
-  let data_array = data.results;
-  console.log(data_array);
+  fetch(url).then((res) => {
+    return res.json();
+  }).then((data) => {
+    let data_array = data.results;
+    console.log(data_array);
 
-  //show the data on screen
-  default_data_on_load(data_array);
+    //show the data on screen
+    default_data_on_load(data_array);
+  }).catch(err => {
+    console.log('error aaya tha news nahi mili');
+  })
+
 }
 
 
@@ -23,8 +27,8 @@ let default_data_on_load = (data) => {
   let screen_data = ``;
 
   //loop throught array response
-  data.map((res, index) => {
-    let time = new Date(data[index].pubDate).toDateString();
+  data.map((res) => {
+    let time = new Date(res.pubDate).toDateString();
 
     let description = ` <p id='description'>${res.description}</p>`;
 
